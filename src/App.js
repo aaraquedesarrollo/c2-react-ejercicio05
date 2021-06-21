@@ -79,7 +79,7 @@ function App() {
     <div className="contenedor">
       <header className="cabecera">
         {!!linea && <NumeroParada parada={parada} />}
-        <Display listaLineas={listaLineas} />
+        {!!respuestaLinea && <Display listaLineas={listaLineas} />}
         {!!respuestaLinea && <TiempoLinia />}
       </header>
       <section className="forms">
