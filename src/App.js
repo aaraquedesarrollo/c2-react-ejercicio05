@@ -80,7 +80,8 @@ function App() {
       <header className="cabecera">
         {!!linea && <NumeroParada parada={parada} />}
         {!!respuestaLinea && <Display listaLineas={listaLineas} />}
-        {!!respuestaLinea && <TiempoLinia />}
+        {!!respuestaLinea && <TiempoLinia linia={linea}/>}
+
       </header>
       <section className="forms">
         <FormularioLinia
