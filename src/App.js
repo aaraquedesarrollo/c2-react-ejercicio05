@@ -108,24 +108,18 @@ function App() {
     }
   };
 
-  const consultarLinea = useCallback(
-    async (parada, linea) => {
-      if (linea !== "") {
-        const response = await fetch(
-          ` ${urlsAPI.urlLinea + linea}/stops/${
-            parada + autorizacionApi.app_id + autorizacionApi.app_key
-          }`
-        );
-        const respuestaLiniaApi = await response.json();
-        setRespuestaLinea(respuestaLiniaApi);
-      }
-    },
-    [autorizacionApi.app_id, autorizacionApi.app_key, urlsAPI.urlLinea]
-  );
-  /* useEffect(
-    () => consultarLinea(parada, linea),
-    [consultarLinea, linea, parada]
-  ); */
+  const consultarLinea = async (parada, linea) => {
+    if (linea !== "") {
+      const response = await fetch(
+        ` ${urlsAPI.urlLinea + linea}/stops/${
+          parada + autorizacionApi.app_id + autorizacionApi.app_key
+        }`
+      );
+      const respuestaLiniaApi = await response.json();
+      setRespuestaLinea(respuestaLiniaApi);
+    }
+  };
+
   return (
     <div className="contenedor">
       <header className="cabecera">
