@@ -1,4 +1,4 @@
-export const FormularioNummeroParada = () => {
+export const FormularioTiempoParada = () => {
   return (
     <form>
       <label htmlFor="tiempo-linea">Tiempo para que llegue la línea: </label>
