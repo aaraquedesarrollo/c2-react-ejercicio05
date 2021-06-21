@@ -1,13 +1,18 @@
 import { useState } from "react";
-import { FormularioLinia } from "./component/FormularioLinia";
-import { FormularioTiempoParada } from "./component/FormularioTiempoParada";
 
+import { FormularioLinia } from "./component/FormularioLinia";
+
+import { FormularioTiempoParada } from "./component/FormularioTiempoParada";
+import { Display } from "./component/Display";
+import { NumeroParada } from "./component/NumeroParada";
+import { TiempoLinia } from "./component/TiempoLinia";
 function App() {
   const autorizacionApi = {
-    app_id: "20424e8e",
-    app_key: "18e4b21c8c5499c1c448a48cb949da5d",
+    app_id: "?app_id=20424e8e",
+    app_key: "&app_key=18e4b21c8c5499c1c448a48cb949da5d",
   };
   const urlsAPI = {
+    urlTransit: "https://api.tmb.cat/v1/transit/parades/",
     //A este url le pasamos despues del / el codigo de parada y la autorizacion de la api
     urlParada: "https://api.tmb.cat/v1/ibus/stops/",
     //A esta url le tenemos que pasar el codigo de linea, despues /stops/, el codigo de parada y luego al autorizacion
@@ -60,27 +65,43 @@ function App() {
     },
   };
 
+  const [listaLineas, setListaLineas] = useState([]);
+  const [existeParada, setExisteParada] = useState(true);
+
+  const comprobarParada = async (codigoParada) => {
+    const response = await fetch(
+      urlsAPI.urlTransit +
+        codigoParada +
+        autorizacionApi.app_id +
+        autorizacionApi.app_key
+    );
+    const datos = await response.json();
+    if (datos.totalFeatures !== 0) {
+      setExisteParada(true);
+      consultarParada(codigoParada);
+    } else {
+      setExisteParada(false);
+    }
+  };
+
+  const consultarParada = async (codigoParada) => {
+    const response = await fetch(
+      urlsAPI.urlParada +
+        codigoParada +
+        autorizacionApi.app_id +
+        autorizacionApi.app_key
+    );
+    const datos = await response.json();
+    setListaLineas(datos.data.ibus.map((linea) => linea));
+  };
+
   return (
     <div className="contenedor">
       <header className="cabecera">
-        <div className="display">
-          <div className="bus">
-            <span className="linea">V16</span>
-            <span className="destino">Universitat</span>
-            <span className="tiempo">10min</span>
-          </div>
-          <div className="bus">
-            <span className="linea">H12</span>
-            <span className="destino">Pla de Palau</span>
-            <span className="tiempo">1min</span>
-          </div>
-          <div className="bus">
-            <span className="linea">32</span>
-            <span className="destino">Barceloneta</span>
-            <span className="tiempo">4min</span>
-          </div>
-        </div>
-        <h2>Tiempo para la línea 60: 2 minutos</h2>
+
+        <NumeroParada/>
+        <Display/>
+        <TiempoLinia/>
       </header>
       <section className="forms">
         <FormularioLinia />
