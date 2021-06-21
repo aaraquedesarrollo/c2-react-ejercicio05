@@ -77,7 +77,7 @@ function App() {
   return (
     <div className="contenedor">
       <header className="cabecera">
-        <NumeroParada />
+        <NumeroParada parada={parada} />
         <Display listaLineas={listaLineas} />
         <TiempoLinia />
       </header>
