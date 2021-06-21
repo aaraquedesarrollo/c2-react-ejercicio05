@@ -55,9 +55,9 @@ function App() {
     const datos = await response.json();
     if (datos.data.ibus[0] !== {}) {
       setListaLineas(datos.data.ibus);
-      setLinea(datos.data.ibus[0].line);
       setBuscarLinia(true);
     } else {
+      setListaLineas([{}]);
       setBuscarLinia(false);
     }
   };
@@ -71,15 +71,18 @@ function App() {
       );
       const respuestaLiniaApi = await response.json();
       setRespuestaLinea(respuestaLiniaApi);
+      setBuscarLinia(false);
     }
   };
 
   return (
     <div className="contenedor">
       <header className="cabecera">
-        <NumeroParada para={parada} />
-        <Display listaLineas={listaLineas} />
-        <TiempoLinia linea={linea} respuestaLinea={respuestaLinea} />
+
+        {!!linea && <NumeroParada parada={parada} />}
+        {!!respuestaLinea && <Display listaLineas={listaLineas} />}
+        {!!respuestaLinea && <TiempoLinia linia={linea}/>}
+
       </header>
       <section className="forms">
         <FormularioLinia
