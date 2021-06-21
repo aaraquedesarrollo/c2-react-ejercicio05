@@ -77,9 +77,9 @@ function App() {
   return (
     <div className="contenedor">
       <header className="cabecera">
-        <NumeroParada />
+        <NumeroParada para={parada} />
         <Display listaLineas={listaLineas} />
-        <TiempoLinia />
+        <TiempoLinia linea={linea} respuestaLinea={respuestaLinea} />
       </header>
       <section className="forms">
         <FormularioLinia

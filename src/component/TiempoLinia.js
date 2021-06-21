@@ -1,5 +1,8 @@
-export const TiempoLinia = () => {
+export const TiempoLinia = (props) => {
+  const { linea, respuestaLinea } = props;
   return (
-<h2>Tiempo para la línea 60: 2 minutos</h2>
+    <h2>
+      Tiempo para la línea {linea}: {respuestaLinea.data.ibus[0]["text-ca"]}
+    </h2>
   );
 };

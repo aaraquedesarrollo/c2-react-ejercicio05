@@ -1,5 +1,6 @@
-export const NumeroParada = () => {
-  return (
-<h1>Parada nº 15</h1>
-  );
+import { useState } from "react";
+
+export const NumeroParada = (props) => {
+  const { parada } = props;
+  return <h1>Parada nº {parada}</h1>;
 };
