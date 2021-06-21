@@ -1,4 +1,4 @@
-export const FormularioNummeroParada = () => {
+export const FormularioNumeroParada = () => {
   return (
     <form>
       <label htmlFor="num-parada">Parada nº: </label>
