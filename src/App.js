@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { FormularioNumeroParada } from "./component/FormularioNumeroParada";
 import { FormularioTiempoParada } from "./component/FormularioTiempoParada";
 
 function App() {
   const autorizacionApi = {
-    app_id: "20424e8e",
-    app_key: "18e4b21c8c5499c1c448a48cb949da5d",
+    app_id: "?app_id=20424e8e",
+    app_key: "&app_key=18e4b21c8c5499c1c448a48cb949da5d",
   };
   const urlsAPI = {
     //A este url le pasamos despues del / el codigo de parada y la autorizacion de la api
@@ -56,6 +57,20 @@ function App() {
         },
       ],
     },
+  };
+
+  const [listaLineas, setListaLineas] = useState([]);
+
+  const consultaParada = async (codigoParada) => {
+    codigoParada = 3;
+    const response = await fetch(
+      urlsAPI.urlParada +
+        codigoParada +
+        autorizacionApi.app_id +
+        autorizacionApi.app_key
+    );
+    const datos = await response.json();
+    setListaLineas(datos.data.ibus.map((linea) => linea.line));
   };
 
   return (
