@@ -62,7 +62,6 @@ function App() {
   const [listaLineas, setListaLineas] = useState([]);
 
   const consultaParada = async (codigoParada) => {
-    codigoParada = 3;
     const response = await fetch(
       urlsAPI.urlParada +
         codigoParada +
@@ -70,7 +69,7 @@ function App() {
         autorizacionApi.app_key
     );
     const datos = await response.json();
-    setListaLineas(datos.data.ibus.map((linea) => linea.line));
+    setListaLineas(datos.data.ibus.map((linea) => linea));
   };
 
   return (
