@@ -122,10 +122,10 @@ function App() {
     },
     [autorizacionApi.app_id, autorizacionApi.app_key, urlsAPI.urlLinea]
   );
-  useEffect(
+  /* useEffect(
     () => consultarLinea(parada, linea),
     [consultarLinea, linea, parada]
-  );
+  ); */
   return (
     <div className="contenedor">
       <header className="cabecera">
