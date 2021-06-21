@@ -17,7 +17,9 @@ export const FormularioTiempoParada = (props) => {
         Tiempo para que llegue la línea: {parada}
       </label>
       <select id="tiempo-linea" onChange={submitLinea}>
-        <option hidden>Linea</option>
+        <option value="" hidden>
+          Linea
+        </option>
         {linias.map((linias) => (
           <option value={linias.line} key={linias.line}>
             {linias.line}
