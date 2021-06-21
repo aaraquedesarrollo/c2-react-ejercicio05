@@ -110,7 +110,7 @@ function App() {
 
   const consultarLinea = useCallback(
     async (parada, linea) => {
-      if (parada !== "") {
+      if (linea !== "") {
         const response = await fetch(
           ` ${urlsAPI.urlLinea + linea}/stops/${
             parada + autorizacionApi.app_id + autorizacionApi.app_key
@@ -122,7 +122,10 @@ function App() {
     },
     [autorizacionApi.app_id, autorizacionApi.app_key, urlsAPI.urlLinea]
   );
-  useEffect(() => consultarLinea(parada, linea), [consultarLinea, linea]);
+  /* useEffect(
+    () => consultarLinea(parada, linea),
+    [consultarLinea, linea, parada]
+  ); */
   return (
     <div className="contenedor">
       <header className="cabecera">
