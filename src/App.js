@@ -8,6 +8,7 @@ function App() {
     app_key: "&app_key=18e4b21c8c5499c1c448a48cb949da5d",
   };
   const urlsAPI = {
+    urlTransit: "https://api.tmb.cat/v1/transit/parades/",
     //A este url le pasamos despues del / el codigo de parada y la autorizacion de la api
     urlParada: "https://api.tmb.cat/v1/ibus/stops/",
     //A esta url le tenemos que pasar el codigo de linea, despues /stops/, el codigo de parada y luego al autorizacion
@@ -60,8 +61,25 @@ function App() {
   };
 
   const [listaLineas, setListaLineas] = useState([]);
+  const [existeParada, setExisteParada] = useState(true);
 
-  const consultaParada = async (codigoParada) => {
+  const comprobarParada = async (codigoParada) => {
+    const response = await fetch(
+      urlsAPI.urlTransit +
+        codigoParada +
+        autorizacionApi.app_id +
+        autorizacionApi.app_key
+    );
+    const datos = await response.json();
+    if (datos.totalFeatures !== 0) {
+      setExisteParada(true);
+      consultarParada(codigoParada);
+    } else {
+      setExisteParada(false);
+    }
+  };
+
+  const consultarParada = async (codigoParada) => {
     const response = await fetch(
       urlsAPI.urlParada +
         codigoParada +
