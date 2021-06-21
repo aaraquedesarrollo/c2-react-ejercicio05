@@ -1,3 +1,5 @@
+import { FormularioNummeroParada } from "./component/FormularioNumeroParada";
+
 function App() {
   return (
     <div className="contenedor">
@@ -23,11 +25,7 @@ function App() {
         <h2>Tiempo para la línea 60: 2 minutos</h2>
       </header>
       <section className="forms">
-        <form>
-          <label htmlFor="num-parada">Parada nº: </label>
-          <input type="number" id="num-parada" />
-          <button type="submit">Buscar</button>
-        </form>
+        <FormularioNumeroParada />
         <form>
           <label htmlFor="tiempo-linea">
             Tiempo para que llegue la línea:{" "}
