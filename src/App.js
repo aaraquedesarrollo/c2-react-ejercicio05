@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { FormularioNumeroParada } from "./component/FormularioNumeroParada";
+
+import { FormularioLinia } from "./component/FormularioLinia";
+
 import { FormularioTiempoParada } from "./component/FormularioTiempoParada";
 import { Display } from "./component/Display";
 import { NumeroParada } from "./component/NumeroParada";
@@ -16,6 +18,7 @@ function App() {
     //A esta url le tenemos que pasar el codigo de linea, despues /stops/, el codigo de parada y luego al autorizacion
     urlLinea: "https://api.tmb.cat/v1/ibus/lines/",
   };
+  const [liniaSeleccionada, setLiniaSeleccionada] = useState({});
   const respuestaParadaFake = {
     status: "success",
     data: {
@@ -95,13 +98,18 @@ function App() {
   return (
     <div className="contenedor">
       <header className="cabecera">
+
         <NumeroParada/>
         <Display/>
         <TiempoLinia/>
       </header>
       <section className="forms">
-        <FormularioNumeroParada />
-        <FormularioTiempoParada />
+        <FormularioLinia />
+        <FormularioTiempoParada
+          respuestaParadaFake={respuestaParadaFake}
+          setLiniaSeleccionada={setLiniaSeleccionada}
+          respuestaLineaFake={respuestaLineaFake}
+        />
       </section>
     </div>
   );
