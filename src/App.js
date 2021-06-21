@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { FormularioLinia } from "./component/FormularioLinia";
 
@@ -11,6 +11,7 @@ function App() {
     app_id: "?app_id=20424e8e",
     app_key: "&app_key=18e4b21c8c5499c1c448a48cb949da5d",
   };
+
   const urlsAPI = {
     urlTransit: "https://api.tmb.cat/v1/transit/parades/",
     //A este url le pasamos despues del / el codigo de parada y la autorizacion de la api
@@ -18,7 +19,7 @@ function App() {
     //A esta url le tenemos que pasar el codigo de linea, despues /stops/, el codigo de parada y luego al autorizacion
     urlLinea: "https://api.tmb.cat/v1/ibus/lines/",
   };
-  const [liniaSeleccionada, setLiniaSeleccionada] = useState({});
+
   const respuestaParadaFake = {
     status: "success",
     data: {
@@ -50,6 +51,7 @@ function App() {
       ],
     },
   };
+
   const respuestaLineaFake = {
     status: "success",
     data: {
@@ -64,11 +66,15 @@ function App() {
       ],
     },
   };
-
+  const [parada, setParada] = useState("");
   const [listaLineas, setListaLineas] = useState([]);
+  const [buscarLinia, setBuscarLinia] = useState(false);
   const [existeParada, setExisteParada] = useState(true);
+  const [linea, setLinea] = useState("");
+  const [respuestaLinea, setRespuestaLinea] = useState([]);
 
-  const comprobarParada = async (codigoParada) => {
+  const comprobarParada = async (e, codigoParada) => {
+    e.preventDefault();
     const response = await fetch(
       urlsAPI.urlTransit +
         codigoParada +
@@ -81,6 +87,7 @@ function App() {
       consultarParada(codigoParada);
     } else {
       setExisteParada(false);
+      setBuscarLinia(false);
     }
   };
 
@@ -92,24 +99,51 @@ function App() {
         autorizacionApi.app_key
     );
     const datos = await response.json();
-    setListaLineas(datos.data.ibus.map((linea) => linea));
+    if (datos.data.ibus[0] !== {}) {
+      setListaLineas(datos);
+      setLinea(datos.data.ibus[0].line);
+      setBuscarLinia(true);
+    } else {
+      setBuscarLinia(false);
+    }
   };
 
+  const consultarLinea = useCallback(
+    async (parada, linea) => {
+      if (parada !== "") {
+        const response = await fetch(
+          ` ${urlsAPI.urlLinea + linea}/stops/${
+            parada + autorizacionApi.app_id + autorizacionApi.app_key
+          }`
+        );
+        const respuestaLiniaApi = await response.json();
+        setRespuestaLinea(respuestaLiniaApi);
+      }
+    },
+    [autorizacionApi.app_id, autorizacionApi.app_key, urlsAPI.urlLinea]
+  );
+  useEffect(() => consultarLinea(parada, linea), [consultarLinea, linea]);
   return (
     <div className="contenedor">
       <header className="cabecera">
-
-        <NumeroParada/>
-        <Display/>
-        <TiempoLinia/>
+        <NumeroParada />
+        <Display />
+        <TiempoLinia />
       </header>
       <section className="forms">
-        <FormularioLinia />
-        <FormularioTiempoParada
-          respuestaParadaFake={respuestaParadaFake}
-          setLiniaSeleccionada={setLiniaSeleccionada}
-          respuestaLineaFake={respuestaLineaFake}
+        <FormularioLinia
+          comprobarParada={comprobarParada}
+          parada={parada}
+          setParada={setParada}
         />
+        {buscarLinia && (
+          <FormularioTiempoParada
+            listaLineas={listaLineas}
+            parada={parada}
+            setLinea={setLinea}
+            consultarLinea={consultarLinea}
+          />
+        )}
       </section>
     </div>
   );

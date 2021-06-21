@@ -1,20 +1,26 @@
 export const FormularioTiempoParada = (props) => {
   const {
-    respuestaParadaFake: {
+    listaLineas: {
       data: { ibus: linias },
     },
-    respuestaLineaFake: {
-      data: { ibus: paradas },
-    },
+    parada,
+    setLinea,
+    consultarLinea,
   } = props;
+  const submitLinea = (e) => {
+    setLinea(e.target.value);
+    consultarLinea(parada, e.target.value);
+  };
   return (
     <form>
       <label htmlFor="tiempo-linea">
-        Tiempo para que llegue la línea: {paradas["text-ca"]}{" "}
+        Tiempo para que llegue la línea: {parada}
       </label>
-      <select id="tiempo-linea">
+      <select id="tiempo-linea" onChange={submitLinea}>
         {linias.map((linias) => (
-          <option value="">{linias.line}</option>
+          <option value={linias.line} key={linias.line}>
+            {linias.line}
+          </option>
         ))}
       </select>
     </form>
