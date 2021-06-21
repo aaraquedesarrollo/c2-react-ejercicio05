@@ -3,8 +3,8 @@
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   background-color: rgb(38, 50, 56);
   color: #fff;
@@ -20,9 +20,26 @@ body {
   padding-right: 5px;
   overflow: hidden;
 }
+
+@keyframes rotate {
+  0% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(-30px);
+  }
+  50% {
+    transform: translateY(-60px);
+  }
+  100% {
+    transform: translateY(-90px);
+  }
+}
+
 .bus {
   display: flex;
   position: relative;
+  animation: rotate 8s infinite;
 }
 .linea {
   width: 40px;
@@ -56,7 +73,9 @@ body {
 label {
   margin-right: 10px;
 }
-input, select, button {
+input,
+select,
+button {
   height: 30px;
   line-height: 30px;
   border: none;
@@ -65,7 +84,8 @@ input {
   background: #fff;
   margin-right: 10px;
 }
-select, button {
+select,
+button {
   background-color: rgb(107, 189, 91);
   color: #fff;
 }

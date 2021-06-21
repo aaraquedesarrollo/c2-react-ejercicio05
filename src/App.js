@@ -20,52 +20,6 @@ function App() {
     urlLinea: "https://api.tmb.cat/v1/ibus/lines/",
   };
 
-  const respuestaParadaFake = {
-    status: "success",
-    data: {
-      ibus: [
-        {
-          routeId: "0590",
-          line: "59",
-          "text-ca": "1 min",
-          "t-in-s": 81,
-          destination: "Pl. Reina Maria Cristina",
-          "t-in-min": 1,
-        },
-        {
-          routeId: "2271",
-          line: "V27",
-          "text-ca": "4 min",
-          "t-in-s": 279,
-          destination: "Pg. Marítim",
-          "t-in-min": 4,
-        },
-        {
-          routeId: "2161",
-          line: "H16",
-          "text-ca": "7 min",
-          "t-in-s": 479,
-          destination: "Pg. Zona Franca",
-          "t-in-min": 7,
-        },
-      ],
-    },
-  };
-
-  const respuestaLineaFake = {
-    status: "success",
-    data: {
-      ibus: [
-        {
-          routeId: "2271",
-          "text-ca": "3 min",
-          "t-in-s": 219,
-          destination: "Pg. Marítim",
-          "t-in-min": 3,
-        },
-      ],
-    },
-  };
   const [parada, setParada] = useState("");
   const [listaLineas, setListaLineas] = useState([]);
   const [buscarLinia, setBuscarLinia] = useState(false);
@@ -100,7 +54,7 @@ function App() {
     );
     const datos = await response.json();
     if (datos.data.ibus[0] !== {}) {
-      setListaLineas(datos);
+      setListaLineas(datos.data.ibus);
       setLinea(datos.data.ibus[0].line);
       setBuscarLinia(true);
     } else {
@@ -124,7 +78,7 @@ function App() {
     <div className="contenedor">
       <header className="cabecera">
         <NumeroParada />
-        <Display />
+        <Display listaLineas={listaLineas} />
         <TiempoLinia />
       </header>
       <section className="forms">
@@ -135,7 +89,7 @@ function App() {
         />
         {buscarLinia && (
           <FormularioTiempoParada
-            listaLineas={listaLineas}
+            linias={listaLineas}
             parada={parada}
             setLinea={setLinea}
             consultarLinea={consultarLinea}
