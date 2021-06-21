@@ -79,7 +79,7 @@ function App() {
       <header className="cabecera">
         <NumeroParada parada={parada} />
         <Display listaLineas={listaLineas} />
-        <TiempoLinia />
+        <TiempoLinia linia={linea}/>
       </header>
       <section className="forms">
         <FormularioLinia

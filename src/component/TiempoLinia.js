@@ -1,5 +1,6 @@
-export const TiempoLinia = () => {
+export const TiempoLinia = (props) => {
+  const {linia}=props;
   return (
-<h2>Tiempo para la línea 60: 2 minutos</h2>
+<h2>Tiempo para la línea {linia}: 2 minutos</h2>
   );
 };
