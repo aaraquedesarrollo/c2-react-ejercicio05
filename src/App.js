@@ -78,6 +78,7 @@ function App() {
   return (
     <div className="contenedor">
       <header className="cabecera">
+
         {!!linea && <NumeroParada parada={parada} />}
         {!!respuestaLinea && <Display listaLineas={listaLineas} />}
         {!!respuestaLinea && <TiempoLinia linia={linea}/>}
