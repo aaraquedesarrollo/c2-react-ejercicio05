@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 export const Display = (props) => {
   const { listaLineas } = props;
   const [posicion, setPosicion] = useState("0px");
-  const maxPosition = listaLineas.length;
+  const maxPosition = listaLineas.length -1;
   const [contador, setContador] = useState(0);
   useEffect(
     () =>
       listaLineas.map(() => {
-        if (contador === maxPosition) {
+       if (contador === maxPosition) {
           setContador(0);
           setPosicion("0px");
         } else {
