@@ -26,6 +26,7 @@ function App() {
   const [existeParada, setExisteParada] = useState(true);
   const [linea, setLinea] = useState("");
   const [respuestaLinea, setRespuestaLinea] = useState([]);
+  const [tiempoBus, setTiempoBus]=useState("");
 
   const comprobarParada = async (e, codigoParada) => {
     e.preventDefault();
@@ -58,7 +59,6 @@ function App() {
       setBuscarLinia(true);
     } else {
       setListaLineas([{}]);
-      setBuscarLinia(false);
     }
   };
 
@@ -72,6 +72,8 @@ function App() {
       const respuestaLiniaApi = await response.json();
       setRespuestaLinea(respuestaLiniaApi);
       setBuscarLinia(false);
+      setTiempoBus(respuestaLiniaApi.data.ibus[0]["text-ca"]);
+
     }
   };
 
@@ -79,9 +81,9 @@ function App() {
     <div className="contenedor">
       <header className="cabecera">
 
-        {!!linea && <NumeroParada parada={parada} />}
-        {!!respuestaLinea && <Display listaLineas={listaLineas} />}
-        {!!respuestaLinea && <TiempoLinia linia={linea}/>}
+        {linea !== "" && <NumeroParada parada={parada} />}
+        {respuestaLinea !== [] && <Display listaLineas={listaLineas} />}
+        {respuestaLinea !== [] && <TiempoLinia linia={linea} tiempoBus={tiempoBus}/>}
 
       </header>
       <section className="forms">
@@ -96,6 +98,7 @@ function App() {
             parada={parada}
             setLinea={setLinea}
             consultarLinea={consultarLinea}
+            setTiempoBus={setTiempoBus}
           />
         )}
       </section>

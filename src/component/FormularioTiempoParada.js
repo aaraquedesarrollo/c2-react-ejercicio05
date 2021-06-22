@@ -1,8 +1,10 @@
 export const FormularioTiempoParada = (props) => {
-  const { linias, parada, setLinea, consultarLinea } = props;
+  const { linias, parada, setLinea, consultarLinea} = props;
   const submitLinea = (e) => {
     setLinea(e.target.value);
     consultarLinea(parada, e.target.value);
+    
+
   };
   return (
     <form>
